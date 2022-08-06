@@ -58,16 +58,11 @@ public class Memo extends Timestamped { // 생성,수정 시간을 자동으로 
         this.contents = requestDto.getContents();
     }
 
-//    public Memo(MemoRequestDto requestDto, String nickname) {
-//        this.title = requestDto.getTitle();
-//        this.contents = requestDto.getContents();
-//        this.memberName = nickname;
-//
-//    }
+
 
     public void addComment(Comment comment) {
-        this.commentList.add(comment);
-    }
+    this.commentList.add(comment);
+}
     public void deleteComment(Comment comment){
         commentList.remove(comment);
 //    commentId로 받고 commentList.removeIf(comment -> comment.getId().equals(commentId)); 해도 제거는 된다.
