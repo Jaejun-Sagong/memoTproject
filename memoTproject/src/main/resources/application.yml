@@ -19,6 +19,19 @@ spring:
         format_sql: true
         show_sql: true
 
+#        이미지업로드관련
+
+  profiles:
+    include:
+      - aws
+      - credentials
+
+  servlet:
+    multipart:
+      enabled: true
+      max-file-size: 20MB
+      max-request-size: 20MB
+
 logging:
   level:
     com.tutorial: debug
@@ -28,3 +41,23 @@ logging:
 # $ echo 'spring-boot-security-jwt-tutorial-jiwoon-spring-boot-security-jwt-tutorial' | base64
 jwt:
   secret: c3ByaW5nLWJvb3Qtc2VjdXJpdHktand0LXR1dG9yaWFsLWppd29vbi1zcHJpbmctYm9vdC1zZWN1cml0eS1qd3QtdHV0b3JpYWwK
+
+
+cloud:
+  aws:
+    s3:
+      bucket: chhong-bucket
+    region:
+      static: ap-northeast-2
+    credentials:
+      #            accessKey: 1234
+      #            secretKey: 1234
+
+
+      accessKey: 1234
+      secretKey: 1234
+
+    stack:
+      auto =false:
+
+
