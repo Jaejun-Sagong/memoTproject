@@ -2,14 +2,11 @@ package com.sparta.memoproject.service;
 
 import com.sparta.memoproject.dto.CommentRequestDto;
 import com.sparta.memoproject.model.Comment;
-import com.sparta.memoproject.model.Member;
 import com.sparta.memoproject.model.Memo;
 import com.sparta.memoproject.repository.CommentRepository;
 import com.sparta.memoproject.repository.MemoRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.access.annotation.Secured;
-import org.springframework.security.core.annotation.AuthenticationPrincipal;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
@@ -32,6 +29,7 @@ public class CommentService {
         Comment comment = new Comment(memo, memberName, commentRequestDto);
         commentRepository.save(comment);
         memo.addComment(comment);
+
         return comment;
 
     }
@@ -61,15 +59,7 @@ public class CommentService {
         }
         memo.deleteComment(comment);
         return true;
-    }
 
-    @Transactional
-    public Comment addChildComment(Long id, Long commentId, CommentRequestDto dto) {
-        Memo memo = memoRepository.findById(id).orElseThrow(() -> new IllegalArgumentException("댓글 쓰기 실패: 해당 게시글이 존재하지 않습니다." + id));
-        Comment parentComment = commentRepository.findById(commentId).orElseThrow(() -> new IllegalArgumentException("댓글 쓰기 실패: 해당 댓글이 존재하지 않습니다." + commentId));
-        String memberName = memoService.getNickname();
-        Comment comment = new Comment(memo, parentComment, dto, memberName);
-        return commentRepository.save(comment);
     }
 }
 

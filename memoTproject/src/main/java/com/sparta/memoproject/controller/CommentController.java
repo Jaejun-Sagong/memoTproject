@@ -3,10 +3,8 @@ package com.sparta.memoproject.controller;
 import com.sparta.memoproject.dto.CommentRequestDto;
 import com.sparta.memoproject.model.Comment;
 import com.sparta.memoproject.service.CommentService;
-import com.sun.org.apache.xpath.internal.operations.Bool;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.access.annotation.Secured;
-import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 
 @RequiredArgsConstructor
@@ -15,6 +13,7 @@ import org.springframework.web.bind.annotation.*;
 public class CommentController {
 
     private final CommentService commentService;  // 필수적인 요소이기 때문에 final 선언
+
 
 
     @Secured("ROLE_USER")
@@ -33,12 +32,6 @@ public class CommentController {
     public Boolean deleteComment(@PathVariable Long id, @PathVariable Long commentId) {
         return commentService.deleteComment(id, commentId);
     }
-
-    @PostMapping("{id}/{commentId}")
-    public Comment addChildComment(@PathVariable Long id, @PathVariable Long commentId, @RequestBody CommentRequestDto requestDto) {
-        return commentService.addChildComment(id, commentId, requestDto);
-    }
-
 }
 
 //    @GetMapping("/api/memos")

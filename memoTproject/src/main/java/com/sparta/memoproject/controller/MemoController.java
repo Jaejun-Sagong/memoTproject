@@ -1,14 +1,13 @@
 package com.sparta.memoproject.controller;
 
+import com.sparta.memoproject.dto.MemoMainResponseDto;
 import com.sparta.memoproject.dto.MemoRequestDto;
-import com.sparta.memoproject.model.Member;
 import com.sparta.memoproject.model.Memo;
 import com.sparta.memoproject.repository.MemberRepository;
 import com.sparta.memoproject.repository.MemoRepository;
 import com.sparta.memoproject.service.MemoService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.access.annotation.Secured;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -33,8 +32,9 @@ public class MemoController {  //생성 조회 변경 삭제가 필요한데 업
     }
 
     @GetMapping("/api/memos")
-    public List<Memo> readMemo() {
-        return memoRepository.findAllByOrderByModifiedAtDesc();
+    public List<MemoMainResponseDto> readMemo() {
+        return memoService.readMemo();
+
     }
 
     @GetMapping("/api/memos/{id}")

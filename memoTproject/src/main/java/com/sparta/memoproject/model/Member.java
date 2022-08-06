@@ -2,10 +2,11 @@ package com.sparta.memoproject.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.sparta.memoproject.Timestamped;
-import lombok.*;
+import lombok.Builder;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
-import java.util.Set;
 
 @Getter
 @NoArgsConstructor
@@ -14,8 +15,7 @@ import java.util.Set;
 public class Member extends Timestamped {
 
    @Id
-   @Column(name = "member_id")
-   @GeneratedValue(strategy = GenerationType.AUTO) //GenerationType.IDENTITY : ID값이 서로 영향없이 자기만의 테이블 기준으로 올라간다.
+   @GeneratedValue(strategy = GenerationType.IDENTITY) //GenerationType.IDENTITY : ID값이 서로 영향없이 자기만의 테이블 기준으로 올라간다.
    private Long id;
    @Column(nullable = false, unique = true)
    private String nickname;
@@ -25,6 +25,8 @@ public class Member extends Timestamped {
 
    @Enumerated(EnumType.STRING)
    private Authority authority;
+
+
 
    @Builder
    public Member(String nickname, String password, Authority authority) {

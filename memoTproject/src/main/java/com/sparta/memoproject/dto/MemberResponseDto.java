@@ -15,3 +15,4 @@ public class MemberResponseDto {
         return new MemberResponseDto(member.getNickname());
     }
 }
+
