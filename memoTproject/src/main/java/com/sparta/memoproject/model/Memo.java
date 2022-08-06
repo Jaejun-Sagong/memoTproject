@@ -6,6 +6,7 @@ import com.sparta.memoproject.dto.MemoRequestDto;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.springframework.web.multipart.MultipartFile;
 
 import javax.persistence.*;
 import java.util.List;
@@ -25,6 +26,10 @@ public class Memo extends Timestamped { // 생성,수정 시간을 자동으로 
     @Column(nullable = false)
     private String contents;
 
+// 추가됨
+    @Column
+    private String urlPath;
+//
     @Column(nullable = false)
     private String memberName;
 
@@ -37,6 +42,14 @@ public class Memo extends Timestamped { // 생성,수정 시간을 자동으로 
         this.memberName = memberName;
         this.title = requestDto.getTitle();
         this.contents = requestDto.getContents();
+    }
+
+//    추가된내용
+    public Memo(MemoRequestDto requestDto, String memberName, String urlPath) {
+        this.memberName = memberName;
+        this.title = requestDto.getTitle();
+        this.contents = requestDto.getContents();
+        this.urlPath = urlPath;
     }
 
 
