@@ -1,9 +1,11 @@
 package com.sparta.memoproject.controller;
 
+
 import com.amazonaws.services.s3.AmazonS3Client;
 import com.amazonaws.services.s3.model.ObjectMetadata;
 import com.sparta.memoproject.dto.MemoRequestDto;
 import com.sparta.memoproject.image.S3Uploader;
+
 import com.sparta.memoproject.model.Memo;
 import com.sparta.memoproject.repository.MemberRepository;
 import com.sparta.memoproject.repository.MemoRepository;
@@ -77,8 +79,9 @@ public class MemoController {  //생성 조회 변경 삭제가 필요한데 업
 //    }
 
     @GetMapping("/api/memos")
-    public List<Memo> readMemo() {
-        return memoRepository.findAllByOrderByModifiedAtDesc();
+    public List<MemoMainResponseDto> readMemo() {
+        return memoService.readMemo();
+
     }
 
     @GetMapping("/api/memos/{id}")

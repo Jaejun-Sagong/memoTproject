@@ -1,18 +1,13 @@
 package com.sparta.memoproject.model;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
-import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.sparta.memoproject.Timestamped;
 import com.sparta.memoproject.dto.CommentRequestDto;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import org.hibernate.annotations.OnDelete;
-import org.hibernate.annotations.OnDeleteAction;
 
 import javax.persistence.*;
-import java.util.ArrayList;
-import java.util.List;
 
 @Getter
 @Setter
@@ -26,6 +21,7 @@ public class Comment extends Timestamped {
     private Long id;
 
 
+
     @Column(nullable = false)
     private String content;
 
@@ -37,6 +33,11 @@ public class Comment extends Timestamped {
     @JoinColumn(name = "MEMO_ID", nullable = false)
     private Memo memo;
 
+//    @JsonIgnore
+//    @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)  //부모가 삭제될 때 자식들도 다 삭제되는 어노테이션
+//    @JsonManagedReference //DB연관관계 무한회귀 방지
+//    private List<Heart> heartList;
+
 //    @Builder
 //    public Comment(String author, String content, Authority authority) { //
 //        this.author = author;
@@ -44,31 +45,21 @@ public class Comment extends Timestamped {
 //        this.authority = authority;
 //    }
 
-    @ManyToOne
-    @JoinColumn(name = "parent_id")
-    @JsonBackReference
-    @OnDelete(action = OnDeleteAction.CASCADE) //삭제되어도
-    private Comment parent; // 4
-
-    @OneToMany(mappedBy = "parent")
-    @JsonManagedReference
-    @OnDelete(action = OnDeleteAction.CASCADE)
-    private List<Comment> children = new ArrayList<>();
-
-
     public Comment(Memo memo, String memberName, CommentRequestDto commentRequestDto) {
         this.content = commentRequestDto.getContent();
         this.memo = memo;
         this.memberName = memberName;
     }
 
-    public Comment(Memo memo, Comment parentComment, CommentRequestDto dto, String memberName) {
-        this.memo = memo;
-        this.parent = parentComment;
-        this.content = dto.getContent();
-        this.memberName = memberName;
-    }
-
+//    public void addHeart(Heart heart) {
+////        this.heartList.add(heart);
+//
+//
+//    }
+//
+//    public void deleteHeart(Heart heart){
+//        this.heartList.remove(heart);
+//    }
     public void setComment(CommentRequestDto commentRequestDto) {
         this.content = commentRequestDto.getContent();
     }

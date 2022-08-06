@@ -1,7 +1,9 @@
 package com.sparta.memoproject.dto;
 
-import lombok.*;
-import org.springframework.security.web.header.Header;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
 
 @Getter
 @NoArgsConstructor
@@ -14,3 +16,4 @@ public class TokenDto {
     private String refreshToken;
     private Long accessTokenExpiresIn;
 }
+

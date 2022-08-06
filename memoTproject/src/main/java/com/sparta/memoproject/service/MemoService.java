@@ -1,11 +1,14 @@
 package com.sparta.memoproject.service;
 
+import com.sparta.memoproject.dto.MemoMainResponseDto;
 import com.amazonaws.services.s3.AmazonS3Client;
 import com.amazonaws.services.s3.model.CannedAccessControlList;
 import com.amazonaws.services.s3.model.PutObjectRequest;
 import com.sparta.memoproject.dto.MemoRequestDto;
 import com.sparta.memoproject.model.Member;
 import com.sparta.memoproject.model.Memo;
+import com.sparta.memoproject.repository.CommentRepository;
+import com.sparta.memoproject.repository.HeartRepository;
 import com.sparta.memoproject.repository.MemberRepository;
 import com.sparta.memoproject.repository.MemoRepository;
 import lombok.RequiredArgsConstructor;
@@ -15,9 +18,14 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.transaction.Transactional;
+
+import java.util.ArrayList;
+import java.util.List;
+
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
+
 import java.util.Optional;
 import java.util.UUID;
 
@@ -28,6 +36,18 @@ public class MemoService {
 
     private final MemoRepository memoRepository; // [2번]update메소드 작성 전에 id에 맞는 값을 찾으려면 find를 써야하는데 find를 쓰기위해서는 Repository가 있어야한다.
     private final MemberRepository memberRepository;
+    private final HeartRepository heartRepository;
+    private final CommentRepository commentRepository;
+
+    public List<MemoMainResponseDto> readMemo(){
+        List<Memo> memos = memoRepository.findAll();
+        List<MemoMainResponseDto> responseDto = new ArrayList<>();
+        for (Memo memo : memos) {
+            final Long heartCnt = heartRepository.countByMemo(memo);
+            responseDto.add(new MemoMainResponseDto(memo, heartCnt));
+        }
+        return responseDto;
+    }
 
     private final AmazonS3Client amazonS3Client;
 
